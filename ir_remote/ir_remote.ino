@@ -53,9 +53,9 @@ void handleLight() {
 
   String power = server.arg("power");
   if (power == "on") {
-    send_ir(irsend, light_on);
+    irsend.sendRaw(light_on, sizeof(light_on) / sizeof(light_on[0]), 38);
   } else if (power == "off") {
-    send_ir(irsend, light_off);
+    irsend.sendRaw(light_off, sizeof(light_off) / sizeof(light_off[0]), 38);
   } else {
     jsonResponse(400, "invalid parameter (power=" + power + ")");
     return;
@@ -72,17 +72,17 @@ void handleTV() {
 
   String command = server.arg("command");
   if (command == "power") {
-    send_ir(irsend, tv_power);
+    irsend.sendRaw(tv_power, sizeof(tv_power) / sizeof(tv_power[0]), 38);
   } else if (command == "next_channel") {
-    send_ir(irsend, tv_next_channel);
+    irsend.sendRaw(tv_next_channel, sizeof(tv_next_channel) / sizeof(tv_next_channel[0]), 38);
   } else if (command == "previous_channel") {
-    send_ir(irsend, tv_previos_channel);
+    irsend.sendRaw(tv_previos_channel, sizeof(tv_previos_channel) / sizeof(tv_previos_channel[0]), 38);
   } else if (command == "volume_up") {
-    send_ir(irsend, tv_volume_up);
+    irsend.sendRaw(tv_volume_up, sizeof(tv_volume_up) / sizeof(tv_volume_up[0]), 38);
   } else if (command == "volume_down") {
-    send_ir(irsend, tv_volume_down);
+    irsend.sendRaw(tv_volume_down, sizeof(tv_volume_down) / sizeof(tv_volume_down[0]), 38);
   } else if (command == "switch_source") {
-    send_ir(irsend, tv_switch_source);
+    irsend.sendRaw(tv_switch_source, sizeof(tv_switch_source) / sizeof(tv_switch_source[0]), 38);
   } else {
     jsonResponse(400, "invalid parameter (command=" + command + ")");
     return;
