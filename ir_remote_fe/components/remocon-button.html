@@ -1,0 +1,55 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+<dom-module id="remocon-button">
+  <template>
+    
+    <style>
+    paper-button {
+      background-color: #fff;
+    }
+    </style>
+
+    <paper-button raised on-click="_get">
+      <content></content>
+    </paper-button>
+
+  </template>
+  <script>
+  Polymer({
+    is: 'remocon-button',
+    properties: {
+      path: {
+	type: String,
+	value: '',
+      },
+      params: {
+	type: Object,
+	value: {},
+      }
+    },
+    
+    _get: function() {
+      function qs( params ){
+	return "?" + Object
+          .keys(params)
+          .map(function(key){
+            return key+"="+params[key]
+          })
+          .join("&")
+      }
+
+      var host = 'http://192.168.1.8/'
+      var endpoint = host + this.path
+      var url = endpoint + qs(this.params);
+      console.log(url);
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", url, true);
+      xhr.send(null);
+    }
+  });
+  </script>
+</dom-module>

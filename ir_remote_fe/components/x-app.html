@@ -1,0 +1,54 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/app-layout/app-layout.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="remocon-button.html">
+
+<dom-module id="x-app">
+  <template>
+    
+    <style>
+    app-toolbar {
+      background-color: #4285f4;
+      color: #fff;
+    }
+    </style>
+
+    <app-drawer-layout>
+
+      <app-drawer>
+	drawer
+      </app-drawer>
+
+      <app-toolbar>
+	<paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+	<div title>IR remote</div>
+	<paper-icon-button icon="search"></paper-icon-button>
+      </app-toolbar>
+
+
+      <remocon-button path="light" params='{"power": "on"}'>light on</remocon-button>
+      <remocon-button path="light" params='{"power": "off"}'>light off</remocon-button>
+
+      <remocon-button path="tv" params='{"command": "power"}'>power</remocon-button>
+
+      <remocon-button path="tv" params='{"command": "previous_channel"}'>previous</remocon-button>
+      <remocon-button path="tv" params='{"command": "next_channel"}'>next</remocon-button>
+
+      <remocon-button path="tv" params='{"command": "volume_up"}'>volume up</remocon-button>
+      <remocon-button path="tv" params='{"command": "volume_down"}'>volume down</remocon-button>
+
+      <remocon-button path="tv" params='{"command": "switch_source"}'>switch source</remocon-button>
+
+
+    </app-drawer-layout>
+
+  </template>
+  <script>
+  Polymer({
+    is: 'x-app'
+  });
+  </script>
+</dom-module>
