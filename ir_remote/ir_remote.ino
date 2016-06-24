@@ -83,6 +83,30 @@ void handleTV() {
     irsend.sendRaw(tv_volume_down, sizeof(tv_volume_down) / sizeof(tv_volume_down[0]), 38);
   } else if (command == "switch_source") {
     irsend.sendRaw(tv_switch_source, sizeof(tv_switch_source) / sizeof(tv_switch_source[0]), 38);
+  } else if (command == "1") {
+    irsend.sendRaw(tv_channel_1, sizeof(tv_channel_1) / sizeof(tv_channel_1[0]), 38);
+  } else if (command == "2") {
+    irsend.sendRaw(tv_channel_2, sizeof(tv_channel_2) / sizeof(tv_channel_2[0]), 38);
+  } else if (command == "3") {
+    irsend.sendRaw(tv_channel_3, sizeof(tv_channel_3) / sizeof(tv_channel_3[0]), 38);
+  } else if (command == "4") {
+    irsend.sendRaw(tv_channel_4, sizeof(tv_channel_4) / sizeof(tv_channel_4[0]), 38);
+  } else if (command == "5") {
+    irsend.sendRaw(tv_channel_5, sizeof(tv_channel_5) / sizeof(tv_channel_5[0]), 38);
+  } else if (command == "6") {
+    irsend.sendRaw(tv_channel_6, sizeof(tv_channel_6) / sizeof(tv_channel_6[0]), 38);
+  } else if (command == "7") {
+    irsend.sendRaw(tv_channel_7, sizeof(tv_channel_7) / sizeof(tv_channel_7[0]), 38);
+  } else if (command == "8") {
+    irsend.sendRaw(tv_channel_8, sizeof(tv_channel_8) / sizeof(tv_channel_8[0]), 38);
+  } else if (command == "9") {
+    irsend.sendRaw(tv_channel_9, sizeof(tv_channel_9) / sizeof(tv_channel_9[0]), 38);
+  } else if (command == "10") {
+    irsend.sendRaw(tv_channel_10, sizeof(tv_channel_10) / sizeof(tv_channel_10)[0], 38);
+  } else if (command == "11") {
+    irsend.sendRaw(tv_channel_11, sizeof(tv_channel_11) / sizeof(tv_channel_11[0]), 38);
+  } else if (command == "12") {
+    irsend.sendRaw(tv_channel_12, sizeof(tv_channel_12) / sizeof(tv_channel_12[0]), 38);
   } else {
     jsonResponse(400, "invalid parameter (command=" + command + ")");
     return;
@@ -99,11 +123,25 @@ void setup() {
   Serial.println("Booting");
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
-    Serial.println("Connection Failed! Rebooting...");
-    delay(5000);
-    ESP.restart();
+
+  pinMode(LED, OUTPUT);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    digitalWrite(LED, HIGH);
+    delay(250);
+
+    digitalWrite(LED, LOW);
+    delay(250);
+
+    Serial.print(".");
   }
+  Serial.println("");
+  Serial.print("Connected to ");
+  Serial.println(ssid);
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+
+  digitalWrite(LED, HIGH);
 
   // Port defaults to 8266
   // ArduinoOTA.setPort(8266);
@@ -133,10 +171,6 @@ void setup() {
   });
   ArduinoOTA.begin();
 
-  Serial.println("Ready");
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-
   server.on("/", handleRoot);
   server.on("/light", handleLight);
   server.on("/tv", handleTV);
@@ -144,13 +178,12 @@ void setup() {
 
   server.begin();
   Serial.println("HTTP server started");
-
-  pinMode(LED, OUTPUT);
-  digitalWrite(LED, HIGH);
 }
 
 void loop() {
   ArduinoOTA.handle();
 
   server.handleClient();
+
+  yield();
 }
