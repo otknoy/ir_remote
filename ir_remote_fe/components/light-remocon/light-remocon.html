@@ -1,0 +1,32 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/app-layout/app-layout.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../remocon-button.html">
+
+<dom-module id="light-remocon">
+  <template>
+    <style>
+    :host {
+      margin: 8px;
+      padding: 8px;
+    }
+
+    </style>
+
+    <div>
+      <p>
+	<remocon-button path="light" params='{"power": "on"}'>light on</remocon-button>
+	<remocon-button path="light" params='{"power": "off"}'>light off</remocon-button>
+      </p>
+    </div>
+
+  </template>
+  <script>
+  Polymer({
+    is: 'light-remocon'
+  });
+  </script>
+</dom-module>

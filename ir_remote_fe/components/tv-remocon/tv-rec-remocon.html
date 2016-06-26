@@ -1,0 +1,79 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+
+<link rel="import" href="../remocon-button.html">
+
+<dom-module id="tv-rec-remocon">
+  <template>
+    <style>
+    :host {
+      margin: 8px;
+      padding: 8px;
+    }
+
+    paper-button.blue {
+      background-color: blue;
+    }
+    paper-button.red {
+      background-color: red;
+    }
+    paper-button.green {
+      background-color: green;
+    }
+    paper-button.yellow {
+      background-color: yellow;
+    }
+
+    </style>
+
+    <div>
+      <p>
+	<remocon-button>TV list</iron-icon></remocon-button>
+	<remocon-button>REC list</remocon-button>
+      </p>
+
+      <div>
+	<p>
+	  <paper-button><<</paper-button>
+	  <paper-button><</paper-button>
+	  <paper-button>o</paper-button>
+	  <paper-button>></paper-button>
+	  <paper-button>>></paper-button>
+	</p>
+      </div>
+
+      <p>
+	<paper-button raised class="blue"> </paper-button>
+	<paper-button raised class="red"> </paper-button>
+	<paper-button raised class="green"> </paper-button>
+	<paper-button raised class="yellow"> </paper-button>
+      </p>
+
+
+      <p>
+	<remocon-button><iron-icon icon="av:fast-rewind"></iron-icon></remocon-button>
+	<remocon-button><iron-icon icon="av:play-arrow"></iron-icon></remocon-button>
+	<remocon-button><iron-icon icon="av:fast-forward"></iron-icon></remocon-button>
+      </p>
+
+      <p>
+	<remocon-button><iron-icon icon="av:skip-previous"></iron-icon></remocon-button>
+	<remocon-button><iron-icon icon="av:stop"></iron-icon></remocon-button>
+	<remocon-button><iron-icon icon="av:pause"></iron-icon></remocon-button>
+	<remocon-button><iron-icon icon="av:skip-next"></iron-icon></remocon-button>
+      </p>
+
+    </div>
+
+  </template>
+  <script>
+  Polymer({
+    is: 'tv-rec-remocon'
+  });
+  </script>
+</dom-module>

@@ -1,10 +1,15 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
 <link rel="import" href="../bower_components/app-layout/app-layout.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
 
-<link rel="import" href="remocon-button.html">
+<link rel="import" href="light-remocon/light-remocon.html">
+<link rel="import" href="tv-remocon/tv-remocon.html">
+<link rel="import" href="tv-remocon/tv-rec-remocon.html">
 
 <dom-module id="x-app">
   <template>
@@ -16,10 +21,17 @@
     }
     </style>
 
+    <app-scrollpos-control selected="{{page}}"></app-scrollpos-control>
+
     <app-drawer-layout>
 
-      <app-drawer>
-	drawer
+      <app-drawer drawer-toggle>
+	<paper-menu selected="{{page}}" on-tap="closeDrawer">
+	  <paper-item>Home</paper-item>
+	  <paper-item>Light</paper-item>
+	  <paper-item>TV</paper-item>
+	  <paper-item>TV (rec)</paper-item>
+	</paper-menu>
       </app-drawer>
 
       <app-toolbar>
@@ -28,27 +40,28 @@
 	<paper-icon-button icon="search"></paper-icon-button>
       </app-toolbar>
 
-
-      <remocon-button path="light" params='{"power": "on"}'>light on</remocon-button>
-      <remocon-button path="light" params='{"power": "off"}'>light off</remocon-button>
-
-      <remocon-button path="tv" params='{"command": "power"}'>power</remocon-button>
-
-      <remocon-button path="tv" params='{"command": "previous_channel"}'>previous</remocon-button>
-      <remocon-button path="tv" params='{"command": "next_channel"}'>next</remocon-button>
-
-      <remocon-button path="tv" params='{"command": "volume_up"}'>volume up</remocon-button>
-      <remocon-button path="tv" params='{"command": "volume_down"}'>volume down</remocon-button>
-
-      <remocon-button path="tv" params='{"command": "switch_source"}'>switch source</remocon-button>
-
+      <iron-pages selected="{{page}}">
+	<div>Home</div>
+	<light-remocon selected></light-remocon>
+	<tv-remocon></tv-remocon>
+	<tv-rec-remocon></tv-rec-remocon>
+      </iron-pages>
 
     </app-drawer-layout>
 
   </template>
   <script>
   Polymer({
-    is: 'x-app'
+    is: 'x-app',
+    properties: {
+      page: {
+	type: Number,
+	value: 2 // tv
+      }
+    },
+    closeDrawer: function () {
+      document.querySelector("app-drawer").resetLayout();
+    }
   });
   </script>
 </dom-module>

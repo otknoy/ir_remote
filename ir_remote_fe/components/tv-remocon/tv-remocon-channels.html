@@ -1,0 +1,39 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../remocon-button.html">
+
+<dom-module id="tv-remocon-channels">
+  <template>
+    <style>
+    </style>
+
+    <div>
+      <p>
+	<remocon-button path="tv" params='{"command": "channel_1"}'>1</remocon-button>
+	<remocon-button path="tv" params='{"command": "channel_2"}'>2</remocon-button>
+	<remocon-button path="tv" params='{"command": "channel_3"}'>3</remocon-button>
+      </p>
+      <p>
+	<remocon-button path="tv" params='{"command": "channel_4"}'>4</remocon-button>
+	<remocon-button path="tv" params='{"command": "channel_5"}'>5</remocon-button>
+	<remocon-button path="tv" params='{"command": "channel_6"}'>6</remocon-button>
+      </p>
+      <p>
+	<remocon-button path="tv" params='{"command": "channel_7"}'>7</remocon-button>
+	<remocon-button path="tv" params='{"command": "channel_8"}'>8</remocon-button>
+	<remocon-button path="tv" params='{"command": "channel_9"}'>9</remocon-button>
+      </p>
+      <p>
+	<remocon-button path="tv" params='{"command": "channel_10"}'>10</remocon-button>
+	<remocon-button path="tv" params='{"command": "channel_11"}'>11</remocon-button>
+	<remocon-button path="tv" params='{"command": "channel_12"}'>12</remocon-button>
+      </p>
+    </div>
+
+  </template>
+  <script>
+  Polymer({
+    is: 'tv-remocon-channels'
+  });
+  </script>
+</dom-module>

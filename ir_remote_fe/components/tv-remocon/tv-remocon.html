@@ -1,0 +1,45 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../remocon-button.html">
+<link rel="import" href="tv-remocon-channels.html">
+<link rel="import" href="tv-remocon-control.html">
+
+<dom-module id="tv-remocon">
+  <template>
+    <style>
+    :host {
+      margin: 8px;
+      padding: 8px;
+    }
+    </style>
+
+    <div>
+
+      <p>
+	<remocon-button path="tv" params='{"command": "switch_source"}'>switch source</remocon-button>
+	<remocon-button path="tv" params='{"command": "power"}'>power</remocon-button>
+      </p>
+      <p>
+	<remocon-button path="tv" params='{"command": "channel_previous"}'>previous</remocon-button>
+	<remocon-button path="tv" params='{"command": "channel_next"}'>next</remocon-button>
+      </p>
+      <p>
+	<remocon-button path="tv" params='{"command": "volume_down"}'>volume down</remocon-button>
+	<remocon-button path="tv" params='{"command": "volume_up"}'>volume up</remocon-button>
+      </p>
+
+      <tv-remocon-channels></tv-remocon-channels>
+
+      <remocon-button path="tv" params='{"command": "list"}'>TV list</remocon-button>
+
+      <tv-remocon-control></tv-remocon-control>
+
+    </div>
+
+  </template>
+  <script>
+  Polymer({
+    is: 'tv-remocon'
+  });
+  </script>
+</dom-module>
