@@ -17,11 +17,6 @@ ESP8266WebServer server(80);
 
 IRsend irsend(IR);
 
-void send_ir(IRsend irsend, unsigned int signal[]) {
-  int hlz = 38;
-  irsend.sendRaw(signal, sizeof(signal) / sizeof(signal[0]), hlz);
-}
-
 void jsonResponse(int status, String message) {
   String response = "{";
   response += "\"status\": " + String(status);
@@ -51,11 +46,14 @@ void handleLight() {
     return;
   }
 
+  const unsigned int hlz = 38;
+  const unsigned int size = 83;
+
   String power = server.arg("power");
   if (power == "on") {
-    irsend.sendRaw(light_on, sizeof(light_on) / sizeof(light_on[0]), 38);
+    irsend.sendRaw(light_on, size, hlz);
   } else if (power == "off") {
-    irsend.sendRaw(light_off, sizeof(light_off) / sizeof(light_off[0]), 38);
+    irsend.sendRaw(light_off, size, hlz);
   } else {
     jsonResponse(400, "invalid parameter (power=" + power + ")");
     return;
@@ -70,43 +68,80 @@ void handleTV() {
     return;
   }
 
+  const unsigned int hlz = 38;
+  const unsigned int size = 67;
+
   String command = server.arg("command");
   if (command == "power") {
-    irsend.sendRaw(tv_power, sizeof(tv_power) / sizeof(tv_power[0]), 38);
-  } else if (command == "next_channel") {
-    irsend.sendRaw(tv_next_channel, sizeof(tv_next_channel) / sizeof(tv_next_channel[0]), 38);
-  } else if (command == "previous_channel") {
-    irsend.sendRaw(tv_previos_channel, sizeof(tv_previos_channel) / sizeof(tv_previos_channel[0]), 38);
-  } else if (command == "volume_up") {
-    irsend.sendRaw(tv_volume_up, sizeof(tv_volume_up) / sizeof(tv_volume_up[0]), 38);
-  } else if (command == "volume_down") {
-    irsend.sendRaw(tv_volume_down, sizeof(tv_volume_down) / sizeof(tv_volume_down[0]), 38);
+    irsend.sendRaw(tv_power, size, hlz);
   } else if (command == "switch_source") {
-    irsend.sendRaw(tv_switch_source, sizeof(tv_switch_source) / sizeof(tv_switch_source[0]), 38);
-  } else if (command == "1") {
-    irsend.sendRaw(tv_channel_1, sizeof(tv_channel_1) / sizeof(tv_channel_1[0]), 38);
-  } else if (command == "2") {
-    irsend.sendRaw(tv_channel_2, sizeof(tv_channel_2) / sizeof(tv_channel_2[0]), 38);
-  } else if (command == "3") {
-    irsend.sendRaw(tv_channel_3, sizeof(tv_channel_3) / sizeof(tv_channel_3[0]), 38);
-  } else if (command == "4") {
-    irsend.sendRaw(tv_channel_4, sizeof(tv_channel_4) / sizeof(tv_channel_4[0]), 38);
-  } else if (command == "5") {
-    irsend.sendRaw(tv_channel_5, sizeof(tv_channel_5) / sizeof(tv_channel_5[0]), 38);
-  } else if (command == "6") {
-    irsend.sendRaw(tv_channel_6, sizeof(tv_channel_6) / sizeof(tv_channel_6[0]), 38);
-  } else if (command == "7") {
-    irsend.sendRaw(tv_channel_7, sizeof(tv_channel_7) / sizeof(tv_channel_7[0]), 38);
-  } else if (command == "8") {
-    irsend.sendRaw(tv_channel_8, sizeof(tv_channel_8) / sizeof(tv_channel_8[0]), 38);
-  } else if (command == "9") {
-    irsend.sendRaw(tv_channel_9, sizeof(tv_channel_9) / sizeof(tv_channel_9[0]), 38);
-  } else if (command == "10") {
-    irsend.sendRaw(tv_channel_10, sizeof(tv_channel_10) / sizeof(tv_channel_10)[0], 38);
-  } else if (command == "11") {
-    irsend.sendRaw(tv_channel_11, sizeof(tv_channel_11) / sizeof(tv_channel_11[0]), 38);
-  } else if (command == "12") {
-    irsend.sendRaw(tv_channel_12, sizeof(tv_channel_12) / sizeof(tv_channel_12[0]), 38);
+    irsend.sendRaw(tv_switch_source, size, hlz);
+  } else if (command == "volume_up") {
+    irsend.sendRaw(tv_volume_up, size, hlz);
+  } else if (command == "volume_down") {
+    irsend.sendRaw(tv_volume_down, size, hlz);
+  } else if (command == "channel_next") {
+    irsend.sendRaw(tv_channel_next, size, hlz);
+  } else if (command == "channel_previous") {
+    irsend.sendRaw(tv_channel_previos, size, hlz);
+  } else if (command == "channel_1") {
+    irsend.sendRaw(tv_channel_1, size, hlz);
+  } else if (command == "channel_2") {
+    irsend.sendRaw(tv_channel_2, size, hlz);
+  } else if (command == "channel_3") {
+    irsend.sendRaw(tv_channel_3, size, hlz);
+  } else if (command == "channel_4") {
+    irsend.sendRaw(tv_channel_4, size, hlz);
+  } else if (command == "channel_5") {
+    irsend.sendRaw(tv_channel_5, size, hlz);
+  } else if (command == "channel_6") {
+    irsend.sendRaw(tv_channel_6, size, hlz);
+  } else if (command == "channel_7") {
+    irsend.sendRaw(tv_channel_7, size, hlz);
+  } else if (command == "channel_8") {
+    irsend.sendRaw(tv_channel_8, size, hlz);
+  } else if (command == "channel_9") {
+    irsend.sendRaw(tv_channel_9, size, hlz);
+  } else if (command == "channel_10") {
+    irsend.sendRaw(tv_channel_10, size, hlz);
+  } else if (command == "channel_11") {
+    irsend.sendRaw(tv_channel_11, size, hlz);
+  } else if (command == "channel_12") {
+    irsend.sendRaw(tv_channel_12, size, hlz);
+  } else if (command == "list") {
+    irsend.sendRaw(tv_list, size, hlz);
+  } else if (command == "rec_list") {
+    irsend.sendRaw(tv_rec_list, size, hlz);
+  } else if (command == "back") {
+    irsend.sendRaw(tv_back, size, hlz);
+  } else if (command == "end") {
+    irsend.sendRaw(tv_end, size, hlz);
+  } else if (command == "enter") {
+    irsend.sendRaw(tv_enter, size, hlz);
+  } else if (command == "u") {
+    irsend.sendRaw(tv_u, size, hlz);
+  } else if (command == "d") {
+    irsend.sendRaw(tv_d, size, hlz);
+  } else if (command == "l") {
+    irsend.sendRaw(tv_l, size, hlz);
+  } else if (command == "r") {
+    irsend.sendRaw(tv_r, size, hlz);
+  } else if (command == "uu") {
+    irsend.sendRaw(tv_uu, size, hlz);
+  } else if (command == "dd") {
+    irsend.sendRaw(tv_dd, size, hlz);
+  } else if (command == "ll") {
+    irsend.sendRaw(tv_ll, size, hlz);
+  } else if (command == "rr") {
+    irsend.sendRaw(tv_rr, size, hlz);
+  } else if (command == "blue") {
+    irsend.sendRaw(tv_blue, size, hlz);
+  } else if (command == "red") {
+    irsend.sendRaw(tv_red, size, hlz);
+  } else if (command == "green") {
+    irsend.sendRaw(tv_green, size, hlz);
+  } else if (command == "yellow") {
+    irsend.sendRaw(tv_yellow, size, hlz);
   } else {
     jsonResponse(400, "invalid parameter (command=" + command + ")");
     return;
