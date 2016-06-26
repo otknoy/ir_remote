@@ -3,38 +3,36 @@
 <link rel="import" href="../remocon-button.html">
 <link rel="import" href="tv-remocon-channels.html">
 <link rel="import" href="tv-remocon-control.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <dom-module id="tv-remocon">
   <template>
     <style>
-    :host {
-      margin: 8px;
+    .line {
       padding: 8px;
+      @apply(--layout-horizontal);
+      @apply(--layout-justified);
     }
     </style>
 
-    <div>
-
-      <p>
-	<remocon-button path="tv" params='{"command": "switch_source"}'>switch source</remocon-button>
-	<remocon-button path="tv" params='{"command": "power"}'>power</remocon-button>
-      </p>
-      <p>
-	<remocon-button path="tv" params='{"command": "channel_previous"}'>previous</remocon-button>
-	<remocon-button path="tv" params='{"command": "channel_next"}'>next</remocon-button>
-      </p>
-      <p>
-	<remocon-button path="tv" params='{"command": "volume_down"}'>volume down</remocon-button>
-	<remocon-button path="tv" params='{"command": "volume_up"}'>volume up</remocon-button>
-      </p>
-
-      <tv-remocon-channels></tv-remocon-channels>
-
-      <remocon-button path="tv" params='{"command": "list"}'>TV list</remocon-button>
-
-      <tv-remocon-control></tv-remocon-control>
-
+    <div class="line">
+      <remocon-button path="tv" params='{"command": "switch_source"}'>source</remocon-button>
+      <remocon-button path="tv" params='{"command": "power"}'>power</remocon-button>
     </div>
+
+    <tv-remocon-channels></tv-remocon-channels>
+
+    <div class="line">
+      <remocon-button path="tv" params='{"command": "volume_down"}'>
+	<iron-icon icon="hardware:keyboard-arrow-left"></iron-icon>	
+      </remocon-button>
+      <p>VOLUME</p>
+      <remocon-button path="tv" params='{"command": "volume_up"}'>
+	<iron-icon icon="hardware:keyboard-arrow-right"></iron-icon>	
+      </remocon-button>
+    </div>
+
+    <tv-remocon-control></tv-remocon-control>
 
   </template>
   <script>
