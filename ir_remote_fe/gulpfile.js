@@ -1,14 +1,24 @@
 var gulp = require('gulp');
-var vulcanize = require('gulp-vulcanize');
+var browserSync =require('browser-sync');
 
-gulp.task('default', function () {
-    return gulp.src('index.html')
-	.pipe(vulcanize({
-	    abspath: '',
-	    excludes: [],
-	    stripExcludes: false,
-	    inlineScripts: true,
-	    inlineCss: true
-	}))
-	.pipe(gulp.dest('dest'));
+gulp.task('default', ['browser-sync']);
+
+
+gulp.task('browser-sync', function() {
+    browserSync({
+        server: {
+            baseDir: "./",
+            index  : "index.html"
+        }
+    });
+});
+
+gulp.task('bs-reload', function () {
+    browserSync.reload();
+});
+
+gulp.task('default', ['browser-sync'], function () {
+    gulp.watch("./*.html", ['bs-reload']);
+    gulp.watch("./css/*.css", ['bs-reload']);
+    gulp.watch("./js/*.js",   ['bs-reload']);
 });
