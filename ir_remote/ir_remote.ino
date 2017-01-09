@@ -6,6 +6,7 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <IRremoteESP8266.h>
+#include <IRDaikinESP.h>
 
 #include "wifi_config.h"
 #include "signal.h"
@@ -150,6 +151,29 @@ void handleTV() {
   jsonResponse(200, "success (command=" + command + ")");
 }
 
+void handleAC() {
+  if (server.method() != HTTP_GET) {
+    jsonResponse(400, "error");
+    return;
+  }
+
+  IRDaikinESP dakinir(IR);
+
+  dakinir.off();
+  /* dakinir.setFan(1); */
+  /* dakinir.setMode(DAIKIN_COOL); */
+  /* dakinir.setTemp(25); */
+  /* dakinir.setSwingVertical(0); */
+  /* dakinir.setSwingHorizontal(0); */
+  dakinir.send();
+
+  delay(2000);
+
+  dakinir.on();
+  dakinir.send();
+
+  jsonResponse(200, "success (acpower=on)");
+}
 
 void setup() {
   irsend.begin();
@@ -209,6 +233,7 @@ void setup() {
   server.on("/", handleRoot);
   server.on("/light", handleLight);
   server.on("/tv", handleTV);
+  server.on("/ac", handleAC);
   server.onNotFound(handleNotFound);
 
   server.begin();
