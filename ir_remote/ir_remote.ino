@@ -179,6 +179,8 @@ void setup() {
   irsend.begin();
   Serial.begin(115200);
 
+  WiFi.config(IPAddress(192,168,1,60),IPAddress(192,168,1,1),IPAddress(255,255,255,0));
+
   Serial.println("Booting");
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
