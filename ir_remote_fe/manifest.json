@@ -1,0 +1,9 @@
+{
+    "name": "IR Remote",
+    "short_name": "IR Remote",
+    "icons": [
+    ],
+    "start_url": "index.html",
+    "display": "standalone",
+    "orientation": "portrait"
+}
