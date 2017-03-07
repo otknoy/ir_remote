@@ -1,7 +1,3 @@
-// light
-unsigned int light_on[83]  = {3600,1550, 550,300, 550,350, 500,1200, 500,1200, 550,350, 500,1200, 500,350, 500,350, 500,350, 550,1200, 500,350, 500,350, 500,1200, 500,400, 500,1200, 500,350, 500,1200, 500,400, 450,400, 500,1200, 500,350, 500,400, 450,400, 450,400, 500,350, 500,350, 500,1200, 500,1250, 500,350, 500,1200, 500,400, 450,400, 450,1250, 500,400, 450,1250, 450,400, 450,400, 500,1200, 500,400, 450,400, 450};  // UNKNOWN CA21A230
-unsigned int light_off[83] = {3600,1600, 550,300, 550,300, 550,1150, 550,1200, 550,300, 550,1200, 500,350, 500,350, 500,350, 500,1200, 550,350, 500,350, 500,1200, 500,350, 500,1250, 500,350, 500,1200, 500,350, 500,350, 500,1250, 500,350, 500,350, 500,350, 500,350, 500,1250, 500,1200, 500,1200, 500,1250, 500,350, 500,1200, 500,350, 500,400, 500,350, 500,1200, 500,1200, 500,400, 500,350, 500,1200, 500,350, 500,350, 500};  // UNKNOWN 1B9C2A92
-
 // TV
 unsigned int tv_power[67]	    = {9000,4350, 650,500, 600,500, 650,450, 650,500, 600,500, 650,450, 650,1600, 600,500, 650,1550, 650,1600, 600,1600, 600,1600, 650,1550, 650,1550, 650,500, 600,1600, 650,450, 650,1600, 600,500, 650,450, 650,1600, 600,500, 650,450, 650,500, 600,1600, 650,500, 600,1600, 600,1600, 600,550, 600,1600, 600,1600, 600,1600, 650};	// NEC 2FD48B7
 unsigned int tv_switch_source[67]   = {9000,4350, 650,500, 650,450, 650,500, 600,500, 650,450, 650,500, 600,1600, 650,450, 650,1600, 600,1600, 600,1600, 650,1550, 650,1550, 650,1600, 600,500, 650,1550, 650,1600, 600,1600, 600,1600, 650,1550, 650,500, 600,500, 650,450, 650,500, 600,500, 650,450, 650,500, 600,500, 650,1550, 650,1600, 600,1600, 650,1550, 650};	// NEC 2FDF00F
@@ -41,3 +37,95 @@ unsigned int tv_blue[67]	    = {9050,4350, 600,500, 650,450, 650,500, 600,500, 6
 unsigned int tv_red[67]		    = {9000,4350, 650,450, 650,450, 700,450, 650,450, 650,500, 650,450, 650,1550, 650,500, 600,1600, 650,1550, 650,1550, 650,1600, 600,1600, 650,1550, 650,450, 650,1600, 600,500, 650,450, 650,1600, 600,500, 650,1550, 650,1550, 650,1600, 600,500, 650,1550, 650,1600, 600,500, 650,1550, 650,500, 600,500, 650,450, 650,1600, 600};	// NEC 2FD2ED1
 unsigned int tv_green[67]	    = {9050,4300, 700,450, 650,450, 650,500, 650,450, 650,450, 650,500, 650,1550, 650,450, 650,1600, 600,1600, 650,1550, 650,1550, 650,1600, 600,1600, 650,500, 600,1600, 600,1600, 600,500, 650,1550, 650,500, 600,1600, 650,1600, 600,1550, 650,500, 600,550, 600,1550, 650,500, 600,1600, 650,500, 600,500, 600,550, 600,1600, 600};	// NEC 2FDAE51
 unsigned int tv_yellow[67]	    = {9050,4300, 650,500, 650,450, 650,450, 700,450, 650,450, 650,450, 700,1550, 650,450, 650,1550, 650,1600, 650,1550, 650,1550, 650,1550, 650,1600, 650,450, 650,1550, 650,500, 650,1550, 650,1550, 650,450, 650,1600, 650,1550, 650,1550, 650,500, 650,1550, 650,450, 650,500, 600,1600, 650,500, 600,500, 600,500, 650,1600, 600};	// NEC 2FD6E91
+
+
+void handleTV() {
+  if (server.method() != HTTP_GET) {
+    jsonResponse(400, "error");
+    return;
+  }
+
+  IRsend irsend(IR);
+  irsend.begin();
+
+  const unsigned int hlz = 38;
+  const unsigned int size = 67;
+
+  String command = server.arg("command");
+  if (command == "power") {
+    irsend.sendRaw(tv_power, size, hlz);
+  } else if (command == "switch_source") {
+    irsend.sendRaw(tv_switch_source, size, hlz);
+  } else if (command == "volume_up") {
+    irsend.sendRaw(tv_volume_up, size, hlz);
+  } else if (command == "volume_down") {
+    irsend.sendRaw(tv_volume_down, size, hlz);
+  } else if (command == "channel_next") {
+    irsend.sendRaw(tv_channel_next, size, hlz);
+  } else if (command == "channel_previous") {
+    irsend.sendRaw(tv_channel_previos, size, hlz);
+  } else if (command == "channel_1") {
+    irsend.sendRaw(tv_channel_1, size, hlz);
+  } else if (command == "channel_2") {
+    irsend.sendRaw(tv_channel_2, size, hlz);
+  } else if (command == "channel_3") {
+    irsend.sendRaw(tv_channel_3, size, hlz);
+  } else if (command == "channel_4") {
+    irsend.sendRaw(tv_channel_4, size, hlz);
+  } else if (command == "channel_5") {
+    irsend.sendRaw(tv_channel_5, size, hlz);
+  } else if (command == "channel_6") {
+    irsend.sendRaw(tv_channel_6, size, hlz);
+  } else if (command == "channel_7") {
+    irsend.sendRaw(tv_channel_7, size, hlz);
+  } else if (command == "channel_8") {
+    irsend.sendRaw(tv_channel_8, size, hlz);
+  } else if (command == "channel_9") {
+    irsend.sendRaw(tv_channel_9, size, hlz);
+  } else if (command == "channel_10") {
+    irsend.sendRaw(tv_channel_10, size, hlz);
+  } else if (command == "channel_11") {
+    irsend.sendRaw(tv_channel_11, size, hlz);
+  } else if (command == "channel_12") {
+    irsend.sendRaw(tv_channel_12, size, hlz);
+  } else if (command == "list") {
+    irsend.sendRaw(tv_list, size, hlz);
+  } else if (command == "rec_list") {
+    irsend.sendRaw(tv_rec_list, size, hlz);
+  } else if (command == "back") {
+    irsend.sendRaw(tv_back, size, hlz);
+  } else if (command == "end") {
+    irsend.sendRaw(tv_end, size, hlz);
+  } else if (command == "enter") {
+    irsend.sendRaw(tv_enter, size, hlz);
+  } else if (command == "u") {
+    irsend.sendRaw(tv_u, size, hlz);
+  } else if (command == "d") {
+    irsend.sendRaw(tv_d, size, hlz);
+  } else if (command == "l") {
+    irsend.sendRaw(tv_l, size, hlz);
+  } else if (command == "r") {
+    irsend.sendRaw(tv_r, size, hlz);
+  } else if (command == "uu") {
+    irsend.sendRaw(tv_uu, size, hlz);
+  } else if (command == "dd") {
+    irsend.sendRaw(tv_dd, size, hlz);
+  } else if (command == "ll") {
+    irsend.sendRaw(tv_ll, size, hlz);
+  } else if (command == "rr") {
+    irsend.sendRaw(tv_rr, size, hlz);
+  } else if (command == "blue") {
+    irsend.sendRaw(tv_blue, size, hlz);
+  } else if (command == "red") {
+    irsend.sendRaw(tv_red, size, hlz);
+  } else if (command == "green") {
+    irsend.sendRaw(tv_green, size, hlz);
+  } else if (command == "yellow") {
+    irsend.sendRaw(tv_yellow, size, hlz);
+  } else {
+    jsonResponse(400, "invalid parameter (command=" + command + ")");
+    return;
+  }
+
+  jsonResponse(200, "success (command=" + command + ")");
+}

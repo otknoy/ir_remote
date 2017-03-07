@@ -8,7 +8,8 @@
 
     <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
 
-    <link rel="import" href="components/x-app.html">
+    <!-- <link rel="import" href="components/x-app.html"> -->
+    <link rel="import" href="components/irremote-button.html">
 
     <style>
     body {
@@ -17,10 +18,47 @@
       background-color: #f1f1f1;
     }
     </style>
+
+    <script>
+    function get(url) {
+      var xhr = new XMLHttpRequest();
+      xhr.addEventListener('loadend', function(){
+	if(xhr.status != 200){
+	  console.error(xhr.status + ' ' + xhr.statusText);
+	}
+      });
+
+      xhr.onerror = function() {
+	console.error(url);
+      };
+
+      xhr.open("GET", url);
+      xhr.send(null);
+    }
+
+    function sendIrCommand(path, params) {
+      function qs(params) {
+	return '?' + Object
+	  .keys(params)
+	  .map(function(key) {
+	    return key + '=' + params[key];
+	  }).join('&')
+      }
+
+      var host = 'http://192.168.1.8/'
+      var endpoint = host + path
+      var url = endpoint + qs(params);
+      console.log(url);
+
+      get(url);
+    }
+    </script>
   </head>
   <body>
+    <!-- <x-app></x-app> -->
 
-    <x-app></x-app>
+    <irremote-button onclick="sendIrCommand('light', {'power': 'on'})"">light on</irremote-button>
+    <irremote-button onclick="sendIrCommand('light', {'power': 'off'})">light off</irremote-button>
 
   </body>
 </html>
