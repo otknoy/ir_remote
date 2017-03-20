@@ -6,18 +6,23 @@ void handleAC() {
 
   IRDaikinESP dakinir(IR);
 
-  dakinir.off();
   /* dakinir.setFan(1); */
   /* dakinir.setMode(DAIKIN_COOL); */
   /* dakinir.setTemp(25); */
   /* dakinir.setSwingVertical(0); */
   /* dakinir.setSwingHorizontal(0); */
+
+  String power = server.arg("power");
+  if (power == "on") {
+    dakinir.on();
+  } else if (power == "off") {
+    dakinir.off();
+  } else {
+    jsonResponse(400, "invalid parameter (power=" + power + ")");
+    return;
+  }
+
   dakinir.send();
 
-  delay(2000);
-
-  dakinir.on();
-  dakinir.send();
-
-  jsonResponse(200, "success (acpower=on)");
+  jsonResponse(200, "success (power=" + power + ")");
 }
