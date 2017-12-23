@@ -1,7 +1,9 @@
 #include <WiFi.h>
-#include "wifi_config.h"
 
-WiFiServer server(80);
+#include "wifi_config.h"
+#include "MyServer.h"
+
+MyServer server(80);
 
 void setup() {
   Serial.begin(115200);
@@ -17,21 +19,14 @@ void setup() {
 
   Serial.println(" connected");
 
-  server.begin();
-
   Serial.print("SSID: ");
   Serial.println(WiFi.SSID());
   Serial.print("IP Address: ");
   Serial.println(WiFi.localIP());
+
+  server.begin();
 }
 
 void loop() {
-  WiFiClient client = server.available();
-
-  if (!client) {
-    return;
-  }
-
-  client.println("hello, world!");
-  client.stop();
+  server.handle_request();
 }
